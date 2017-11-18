@@ -2,7 +2,7 @@ import { HomePage } from './../home/home';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { DataProvider } from './../../providers/data/data';
-import { Http,Headers,RequestOptions } from '@angular/http';
+import { Http,Headers } from '@angular/http';
 
 
 /**
@@ -39,6 +39,7 @@ export class LoginPage {
       data =>{
         let response = data.json();
         if(response.status){
+          localStorage.setItem('token', response.token)
           console.log('berhasil login')
           this.navCtrl.setRoot(HomePage)
         }

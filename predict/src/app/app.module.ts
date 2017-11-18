@@ -13,7 +13,8 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { DataProvider } from '../providers/data/data';
 
-import { HttpClientModule } from '@angular/common/http';//for data request
+import { HttpClientModule } from '@angular/common/http';
+import { AuthenticationProvider } from '../providers/authentication/authentication';//for data request
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { HttpClientModule } from '@angular/common/http';//for data request
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    DataProvider
+    DataProvider,
+    AuthenticationProvider
   ]
 })
 export class AppModule {}

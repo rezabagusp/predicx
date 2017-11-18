@@ -24,7 +24,8 @@ export class MyApp {
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Home', component: HomePage },
-      { title: 'Predict', component: PredictPage }
+      { title: 'Predict', component: PredictPage },
+      { title: 'Logout', component: null }
     ];
 
   }
@@ -41,6 +42,13 @@ export class MyApp {
   openPage(page) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
-    this.nav.setRoot(page.component);
+    if(page.Component){
+      this.nav.setRoot(page.component);
+    }
+    else{
+      localStorage.removeItem('token')
+      this.nav.setRoot(LoginPage);
+    }
+
   }
 }

@@ -1,9 +1,8 @@
 {
-  "name": "new",
-  "version": "0.0.0",
-  "private": true,
+  "name": "predicx",
+  "version": "0.0.1",
   "scripts": {
-    "start": "nodemon ./bin/www"
+    "start": "nodemon ./bin/www --watch \"../backend/*\""
   },
   "dependencies": {
     "body-parser": "~1.17.1",
@@ -13,7 +12,6 @@
     "crypto": "0.0.3",
     "debug": "~2.6.3",
     "express": "~4.15.2",
-    "html-pdf": "^2.1.0",
     "http-server": "^0.9.0",
     "jade": "~1.11.0",
     "jsonwebtoken": "^7.4.0",
@@ -23,9 +21,10 @@
     "mysqldump": "^1.4.2",
     "node-rest-client": "^3.1.0",
     "nodemailer": "^4.0.1",
-    "nodemon": "^1.11.0",
+    "nodemon": "^1.12.1",
     "pg": "^6.4.0",
     "pg-hstore": "^2.3.2",
+    "python-shell": "^0.4.0",
     "randomstring": "^1.1.5",
     "request-promise": "^4.2.2",
     "sequelize": "^3.30.4",

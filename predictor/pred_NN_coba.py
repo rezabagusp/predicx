@@ -1,4 +1,4 @@
-import pickle, json, sys, getopt
+import pickle, json, sys, getopt, os
 from sklearn.preprocessing import StandardScaler
 from sklearn.externals import joblib 
 
@@ -42,10 +42,11 @@ def main(argv):
 
 if __name__ == '__main__':
 	main(sys.argv[1:])
+	dirname = os.path.dirname(os.path.abspath(__file__))
 
 	try:
-		mlp = joblib.load('model/'+model_name+'.pkl')
-		scaler = joblib.load('model/'+model_name+'_scaler.pkl')
+		mlp = joblib.load(dirname+'/model/'+model_name+'.pkl')
+		scaler = joblib.load(dirname+'/model/'+model_name+'_scaler.pkl')
 	except FileNotFoundError:
 		print('No such model name!')
 		sys.exit()

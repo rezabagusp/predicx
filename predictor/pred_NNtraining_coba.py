@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-import pickle, sys, getopt, time
+import pickle, sys, getopt, time, os
 
 from sklearn.utils import shuffle
 from sklearn.neural_network import MLPClassifier
@@ -8,8 +8,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import classification_report,confusion_matrix
 
-
-start_time = time.clock()
+dirname = os.path.dirname(os.path.abspath(__file__))
 csv_name = ""
 model_name = ""
 class_name = ""
@@ -46,7 +45,7 @@ def preprocessing(train, test):
 	train_new = scaler.transform(train)
 	test_new = scaler.transform(test)
 
-	with open('model/'+model_name+'_scaler.pkl', 'wb') as scale:
+	with open(dirname+'/model/'+model_name+'_scaler.pkl', 'wb') as scale:
 		pickle.dump(scaler, scale)
 
 	return train_new, test_new
@@ -68,7 +67,7 @@ def training(X_train, y_train, X_test=None, y_test=None):
 		else:
 			print("No testing data!")
 	else:
-		with open('model/'+model_name+'.pkl', 'wb') as model:
+		with open(dirname+'/model/'+model_name+'.pkl', 'wb') as model:
 			pickle.dump(mlp, model)
 
 def main(argv):
@@ -128,7 +127,7 @@ if __name__ == '__main__':
 		training(X_train,y_train,X_test,y_test)
 	else:
 		training(X_train,y_train)
-	print("Done in %s seconds" % (time.clock()-start_time))
+	print("Done!")
 
 
 '''

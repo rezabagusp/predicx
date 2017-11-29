@@ -2,7 +2,7 @@
   "name": "predicx",
   "version": "0.0.1",
   "scripts": {
-    "start": "nodemon ./bin/www --watch \"../backend/*\""
+    "start": "nodemon ./bin/www --watch \".\""
   },
   "dependencies": {
     "body-parser": "~1.17.1",

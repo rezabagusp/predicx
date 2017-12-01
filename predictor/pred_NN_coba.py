@@ -55,7 +55,7 @@ if __name__ == '__main__':
 	probability = mlp.predict_proba(scaler.transform([data]))[0]
 	out = {}
 
-	mutu = ['E', 'D', 'C', 'BC', 'B', 'AB', 'B']
+	mutu = ['E', 'D', 'C', 'BC', 'B', 'AB', 'A']
 	out['prediksi_mutu'] = mutu[x]
 
 	i = 0

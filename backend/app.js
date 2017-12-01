@@ -44,7 +44,7 @@ app.get('/run-predict', function(req, res){
 
         py_options = {
             scriptPath: "../predictor/",
-            mode: 'text',
+            mode: 'json',
             args: ["-m", model, "-d", value]    
         };
 
@@ -52,11 +52,11 @@ app.get('/run-predict', function(req, res){
             if(err){
                 res.json({status: false, message: err});
             }else{
-                predicted = result[0].replace(/[\n\r]+/g, '');
-                if(predicted.indexOf("No such model") !== -1)
-                    res.send({status: false, message: 'Predicition failed: '+predicted});
+                predicted = result[0];
+                if(predicted.message.indexOf("No such model") !== -1)
+                    res.json({status: false, message: 'Predicition failed: '+predicted.message});
                 else
-                    res.send({status: true, message: 'Prediction success!', results: predicted});
+                    res.json({status: true, message: 'Prediction success!', results: predicted});
             }
         });
     }

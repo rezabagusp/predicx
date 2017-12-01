@@ -48,24 +48,24 @@ if __name__ == '__main__':
 		mlp = joblib.load(dirname+'/model/'+model_name+'.pkl')
 		scaler = joblib.load(dirname+'/model/'+model_name+'_scaler.pkl')
 	except FileNotFoundError:
-		print('No such model name!')
+		print(json.dumps({"message": "No such model name!"}))
 		sys.exit()
 
 	x = mlp.predict(scaler.transform([data]))[0]
-	# print(x)
+	probability = mlp.predict_proba(scaler.transform([data]))[0]
+	out = {}
 
-	if(x == 6):
-		print('A')
-	elif(x == 5):
-		print('AB')
-	elif(x == 4):
-		print('B')
-	elif(x == 3):
-		print('BC')
-	elif(x == 2):
-		print('C')
-	elif(x == 1):
-		print('D')
-	else:
-		print('E')
-	# print(json.dumps(x))
+	mutu = ['E', 'D', 'C', 'BC', 'B', 'AB', 'B']
+	out['prediksi_mutu'] = mutu[x]
+
+	i = 0
+	prob = {}
+	for p in probability:
+		percentage = p*100
+		prob[mutu[i]] = "%.3f" % (percentage)
+		i += 1
+
+	out['probability'] = prob
+	out['message'] = "success"
+	
+	print(json.dumps(out))

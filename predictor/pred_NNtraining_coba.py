@@ -1,12 +1,13 @@
 import pandas as pd
 import numpy as np
-import pickle, sys, getopt, time, os
+import sys, getopt, time, os
 
 from sklearn.utils import shuffle
 from sklearn.neural_network import MLPClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import classification_report,confusion_matrix
+from sklearn.externals import joblib 
 
 dirname = os.path.dirname(os.path.abspath(__file__))
 csv_name = ""
@@ -46,7 +47,7 @@ def preprocessing(train, test):
 	test_new = scaler.transform(test)
 
 	with open(dirname+'/model/'+model_name+'_scaler.pkl', 'wb') as scale:
-		pickle.dump(scaler, scale)
+		joblib.dump(scaler, scale)
 
 	return train_new, test_new
 
@@ -68,7 +69,7 @@ def training(X_train, y_train, X_test=None, y_test=None):
 			print("No testing data!")
 	else:
 		with open(dirname+'/model/'+model_name+'.pkl', 'wb') as model:
-			pickle.dump(mlp, model)
+			joblib.dump(mlp, model)
 
 def main(argv):
 	usage = "Usage:\

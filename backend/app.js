@@ -2,6 +2,7 @@ var express = require('express');
 var cors = require('cors');
 var bodyParser = require('body-parser');
 var pyshell = require('python-shell');
+var fetch = require('node-fetch');
 
 var app = express();
 
@@ -59,6 +60,51 @@ app.get('/run-predict', function(req, res){
             }
         });
     }
-})
+});
+
+function ldap_auth(username, password){
+    let url = "http://ng.rajamuda.web.id/ldap_auth.php?username="+username+"&password="+password;
+
+    return fetch(url)
+        .then(mhs => {
+            return mhs.text();
+        })
+}
+
+app.post('/login', function(req, res){
+    var username = req.body.username;
+    var password = req.body.password;
+
+    ldap_auth(username, password)
+        .then(data => {
+            if(data.indexOf('null') !== -1){
+                res.json({status: false, message: 'wrong username or password'});
+            }else{
+                data = JSON.parse(data);
+                
+                let d = new Date();
+                let name = data.cn['0'];
+                let nim = data.nrp['0'];
+                let tahun_masuk = data.angkatan['0'];
+                let angkatan = parseInt(data.angkatan['0'])-1963;
+                let semester = null;
+                if(d.getMonth() >= 2 && d.getMonth() <= 8){
+                    semester = (d.getFullYear()-parseInt(data.angkatan['0']))*2;
+                }else{
+                    semester = (d.getFullYear()-parseInt(data.angkatan['0']))*2 + 1;                    
+                }
+
+                let mhs_info = {
+                    name: name,
+                    nim: nim,
+                    tahun_masuk: tahun_masuk,
+                    angkatan: angkatan,
+                    semester: semester
+                }
+                
+                res.json({status: true, message: 'login success', mhs_info: mhs_info});
+            }
+        });
+});
 
 module.exports = app;

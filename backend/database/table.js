@@ -18,7 +18,7 @@ var mahasiswaModel = sequelize.import(__dirname + '/../models/mahasiswaModel.mod
 var mataKuliah = sequelize.import(__dirname + '/../models/mataKuliah.model');
 var nilaiMataKuliah = sequelize.import(__dirname + '/../models/nilaiMataKuliah.model');
 var nilaiMutu = sequelize.import(__dirname + '/../models/nilaiMutu.model');
-var syaratMataKuliah = sequelize.import(__dirname + '/../models/nilaiMutu.model');
+var syaratMataKuliah = sequelize.import(__dirname + '/../models/syaratMataKuliah.model');
 
 
 // create table

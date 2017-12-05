@@ -4,7 +4,7 @@ var express = require('express'),
     fetch = require('node-fetch'),    
     crypto = require('crypto');
 
-var mahasiswa = sequelize.import('./../models/mahasiswa.model.js');
+var mahasiswa = sequelize.import('./../models/mahasiswa.model');
 
 // akases LDAP IPB
 function ldap_auth(username, password){
@@ -18,32 +18,44 @@ function ldap_auth(username, password){
 
 class Authentication{
 
-    constructor(){  
-        this.nama_user='';
-        this.password_user='';
-    }
+    constructor(){}
 
-    setNamaUser(data){
-        this.nama_user = data;
-    }
-    setPasswordUser(data){
-        this.password_user = crypto.createHash('sha256').update(data).digest('hex');
-    }
-    login(data, res){
-        this.setNamaUser(data.nama_user);
-        this.setPasswordUser(data.password_user);
-        mahasiswa.findOne({
+    login(data,username,password){
+        return mahasiswa.findOne({
             where: {
-                nama_user:this.nama_user,
-                password_user:this.password_user
+                nama_user: username
             }
-        }).then((data)=>{
-            var token = jwt.sign(data.dataValues, SECRET_KEY);
-            res.json({status:true, message:"login berhasil", token:token});
-        }).catch((err)=>{
-            res.json({status:false, message:"gagal login"})
+        }).then(function(mhs){
+            var login_time = Math.floor(Date.now()/1000);
+            var jwtData = {
+                nama_user:username,
+                iat: login_time,
+                expired: login_time + 3600 // expired in 1 hour
+            };
+            var token = jwt.sign(jwtData, '1n1k3y');
+            if(!mhs){
+                return mahasiswa.create({
+                    nama_mahasiswa:data.name,
+                    nim_mahasiswa:data.nim,
+                    nama_user:username,
+                    password_user:crypto.createHash('sha256').update(password).digest('hex'),
+                    email_user:data.email,
+                    role:'mahasiswa',
+                    fk_departemen_id: 6
+                }).then(function(){
+                    return token;
+                }).catch(function(err){
+                    console.log(err);
+                    return null;
+                })
+            }else{
+                return token;
+            }
+        }).catch(function(err){
+            console.log(err);
+            return null
         })
-
+        
     }
 
     login_ldap(data, res){
@@ -61,6 +73,7 @@ class Authentication{
                     let name = data.cn['0'];
                     let nim = data.nrp['0'];
                     let tahun_masuk = data.angkatan['0'];
+                    let email = data.mail['0'];
                     let angkatan = parseInt(data.angkatan['0'])-1963;
                     let semester = null;
                     if(d.getMonth() >= 2 && d.getMonth() <= 8){
@@ -69,15 +82,27 @@ class Authentication{
                         semester = (d.getFullYear()-parseInt(data.angkatan['0']))*2 + 1;                    
                     }
 
-                    let mhs_info = {
+                    var mhs_info = {
                         name: name,
                         nim: nim,
+                        email: email,
                         tahun_masuk: tahun_masuk,
                         angkatan: angkatan,
                         semester: semester
                     }
+                    this.login(mhs_info,username,password)
+                        .then(function(retval){
+                            if(retval !== null){
+                                console.log(retval);
+                                res.json({status: true, message: 'login success yang baru', mhs_info: mhs_info, token: retval});
+                            }else{
+                                res.json({status: false, message: 'an error occured', err: retval});
+                            }
+                        })
+                        .catch(function(err){
+                            res.json({status: false, message: 'an error occured', err: err});
+                        })
                     
-                    res.json({status: true, message: 'login success yang baru', mhs_info: mhs_info});
                 }
             });        
 

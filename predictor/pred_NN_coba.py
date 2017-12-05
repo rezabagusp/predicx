@@ -7,12 +7,12 @@ data = []
 
 def main(argv):
 	usage = "Usage:\
-					 \ntest.py -m <model_name> -d <data>\n \
-					 \nEx: test.py -m \"model_name\" -d \"5,5,6\" \
-					 \nModel name is not requiring extension (.pkl). Data (d) size must be respect to model\n\
-					 \n[Optional] \
-					 \n-h --help\tShow usage \
-					"
+			\ntest.py -m <model_name> -d <data>\n \
+			\nEx: test.py -m \"model_name\" -d \"5,5,6\" \
+			\nModel name is not requiring extension (.pkl). Data (d) size must be respect to model\n\
+			\n[Optional] \
+			\n-h --help\tShow usage \
+			"
 
 	if(not len(argv)):
 		print(usage)

@@ -10,6 +10,12 @@ module.exports = function(sequelize, DataType){
             key: 'id'
           }
         },
-        syarat_mata_kuliah_id: DataType.INTEGER
+        syarat_mata_kuliah_id: {
+          type: DataType.INTEGER,
+          references: {
+            model: mataKuliah,
+            key: 'id'
+          }
+        }
     });
 }

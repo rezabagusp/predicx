@@ -6,6 +6,7 @@ var fetch = require('node-fetch');
 //routes
 var auth = require('./routes/auth');
 var predict = require('./routes/predict');
+var matkul = require('./routes/matakuliah');
 var app = express();
 
 app.use(cors());
@@ -19,5 +20,6 @@ app.get('/', function(req, res){
 //using router
 app.use('/auth', auth);
 app.use('/predict', predict);
+app.use('/matkul', matkul);
 
 module.exports = app;

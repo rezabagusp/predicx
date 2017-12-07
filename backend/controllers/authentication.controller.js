@@ -20,6 +20,43 @@ class Authentication{
 
     constructor(){}
 
+    tokenCheck(token){
+        try{
+            var decoded = jwt.verify(token, '1n1k3y');
+            return decoded;
+        }catch(err){
+            return null;
+        }
+    }
+
+    getUserInfo(req, res){
+        var jwt_decoded = this.tokenCheck(req.headers['authorization']);
+        if(!jwt_decoded){
+            res.json({status: false, message: "token error"});
+        }else{
+            var username = jwt_decoded.nama_user;
+            mahasiswa.findOne({
+                attributes: ['nama_mahasiswa','nim_mahasiswa','nama_user','email_user'],
+                where: {
+                    nama_user: username
+                }
+            }).then(function(mhs){
+                let data = {};
+
+                data['name'] = mhs.nama_mahasiswa;
+                data['nim'] = mhs.nim_mahasiswa;
+                data['email'] = mhs.email_user;
+                data['tahun_masuk'] = "20"+mhs.nim_mahasiswa.substring(3,5);
+                data['semester'] = jwt_decoded.smt;
+
+                res.json({status: true, message: "token valid", mhs_info: data});
+            }).catch(function(err){
+                res.json({status: false, message: "query error", err: err});
+            })
+        }
+
+    }
+
     login(data,username,password){
         return mahasiswa.findOne({
             where: {
@@ -29,6 +66,7 @@ class Authentication{
             var login_time = Math.floor(Date.now()/1000);
             var jwtData = {
                 nama_user:username,
+                smt:data.semester,
                 iat: login_time,
                 expired: login_time + 3600 // expired in 1 hour
             };

@@ -29,18 +29,19 @@ export class LoginPage {
   }
 
   login(){
-    let creds = JSON.stringify({nama_user:this.username, password_user: this.password})
+    let creds = JSON.stringify({username:this.username, password: this.password})
 
     let header= new Headers();
     header.append('Content-type', 'application/json' ); 
 
-    this.http.post(this.data.base_url+'login/masuk', creds, {headers:header})
+    this.http.post(this.data.base_url+'auth/login-ldap', creds, {headers:header})
     .subscribe(
       data =>{
         let response = data.json();
         if(response.status){
           localStorage.setItem('token', response.token)
           console.log('berhasil login')
+          console.log('balikan', response.mhs_info)
           this.navCtrl.setRoot(HomePage)
         }
         else{

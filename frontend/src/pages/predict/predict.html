@@ -22,11 +22,27 @@
   <ion-grid>
     <ion-row>
       <ion-col col-12>
-        <ion-searchbar placeholder="Cari Mata Kuliah"></ion-searchbar>
+        <!-- <ion-searchbar placeholder="Cari Mata Kuliah"></ion-searchbar> -->
+        <ion-searchbar autocomplete="on" animated="true" [(ngModel)]="myInput" (ionInput)="getItems($event)" (tap)="copyItems()" > Cari Mata Kuliah</ion-searchbar>
+        <ion-list>
+          <ion-item *ngFor="let item of tempItems">
+            <div (tap)="choosedItem(item)">
+              {{ item }}
+            </div>
+          </ion-item>
+        </ion-list>
       </ion-col>
       <!-- <ion-col col-3>
         <button ion-button>Login</button>
       </ion-col> -->
+    </ion-row>
+    <ion-row>
+      <canvas baseChart
+              [data]="doughnutChartData"
+              [labels]="doughnutChartLabels"
+              [chartType]="doughnutChartType"
+              (chartHover)="chartHovered($event)"
+              (chartClick)="chartClicked($event)"></canvas>
     </ion-row>
   </ion-grid>
 </ion-content>

@@ -12,7 +12,7 @@ import { Http,Headers,RequestOptions } from '@angular/http';
 @Injectable()
 export class DataProvider {
 
-  public base_url= "http://localhost:8000/"
+  public base_url= "http://localhost:3000/"
   
   constructor(public http: HttpClient) {
     console.log('Hello DataProvider Provider');
@@ -27,12 +27,20 @@ export class DataProvider {
       this.http.post(url, creds, {headers : header})
         .subscribe(data => {
           resolve(data);
+          console.log(data)
         }, err => {
           console.log(err);
         });
       });
-
   }
 
+  isHaveToken(){
+    var token = localStorage.getItem('token')
+
+    if(token)
+      return true
+    else
+      return false
+  }
 
 }

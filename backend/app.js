@@ -21,5 +21,8 @@ app.get('/', function(req, res){
 app.use('/auth', auth);
 app.use('/predict', predict);
 app.use('/matkul', matkul);
+app.use('*', function(req, res, next){
+  res.json({status:false, message:'non API implemented'})
+})
 
 module.exports = app;

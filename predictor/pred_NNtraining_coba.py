@@ -5,7 +5,7 @@ import sys, getopt, time, os
 from sklearn.utils import shuffle
 from sklearn.neural_network import MLPClassifier
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import StandardScaler, MinMaxScaler
 from sklearn.metrics import classification_report,confusion_matrix
 from sklearn.externals import joblib 
 
@@ -41,7 +41,7 @@ def splitting(data, test_size, random_state):
 
 def preprocessing(train, test):
 	#preprocessing
-	scaler = StandardScaler()
+	scaler = MinMaxScaler()
 	scaler.fit(train)
 	train_new = scaler.transform(train)
 	test_new = scaler.transform(test)
@@ -67,9 +67,9 @@ def training(X_train, y_train, X_test=None, y_test=None):
 			print(predictions)
 		else:
 			print("No testing data!")
-	else:
-		with open(dirname+'/model/'+model_name+'.pkl', 'wb') as model:
-			joblib.dump(mlp, model)
+			
+	with open(dirname+'/model/'+model_name+'.pkl', 'wb') as model:
+		joblib.dump(mlp, model)
 
 def main(argv):
 	usage = "Usage:\

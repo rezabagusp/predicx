@@ -16,12 +16,18 @@ import { Http,Headers } from '@angular/http';
 })
 export class PredictPage {
   
+  allData:any;
   searchQuery: string = '';
   predictStatus = false;
   items: string[];
-  choosed_item='';
+  choosed_item:string;
   myInput=null;
-  tempItems: string[];
+  tempItems: string[]=[];
+  searchStatus = false;
+  studyHour:number;
+  hours:any;
+  id:number;
+  hasilPrediksi:number;
   public chartLabels:string[] = ['A', 'AB', 'B','BC','C','D','E'];
   public chartData:number[]=[];
   public chartType:string = 'doughnut';
@@ -33,10 +39,17 @@ export class PredictPage {
   loading:any;
   public chartColors: any[] = [
   { 
-    backgroundColor:["#05234d", "#c57f28", "#7e5f40", "#6fff71", "#B9E8E0","#d64b4b","#632b58"] 
+    backgroundColor:["green", "#c57f28", "yellow", "#05234d", "#B9E8E0","#d64b4b","#632b58"] 
   }];
+  public selectOptions = {
+    title: 'Durasi Jam Belajar ',
+    subTitle: 'Pilih durasi jam per minggu',
+    mode: 'md'
+  };
   constructor(public navCtrl: NavController, public navParams: NavParams, public data: DataProvider, public http: Http, public loadingCtrl: LoadingController) {
-   // this.initializeItems();
+    this.hours = Array.from(new Array(24),(val,index)=>index+1);
+    console.log(this.hours)
+    this.initializeItems();
   }
   
   presentLoadingText() {
@@ -51,21 +64,46 @@ export class PredictPage {
     console.log('ionViewDidLoad PredictPage');
   }
 
+  toList(src,dst){
+    var kodeDanNama = ''
+    for(var i=0;i<src.length;i++){
+      kodeDanNama = src[i]['kode_mata_kuliah'] + ' - ' + src[i]['nama_mata_kuliah']
+      dst.push(kodeDanNama)
+    }
+  }
+
   initializeItems() {
-    this.items = [
-      'Amsterdam',
-      'Bogota'
-    ];
+    let query = 'matkul/all'
+    let header= new Headers();
+    let token = localStorage.getItem('token')
+    header.append('Content-type', 'application/json' );  
+    header.append('Authorization',token)
+    this.http.get(this.data.base_url+query,{headers:header})
+    .subscribe(
+      data =>{
+        let response = data.json();
+        if(response.status){
+          console.log(response)
+          this.allData = response.data;
+          this.toList(this.allData,this.tempItems)
+        }
+        else{
+          console.log('gagal mengambil semua matakuliah')
+        }
+      }
+    )
   }
   
   copyItems(){
-    this.tempItems = this.items;
+    this.items = this.tempItems;
   }
 
   getItems(ev: any) {
       // Reset items back to all of the items
-      this.initializeItems();
-      
+      // this.initializeItems();
+      this.copyItems();
+      // Show suggestion items
+      this.searchStatus = true;
       // set val to the value of the searchbar
       let val = ev.target.value;
       console.log(val)
@@ -77,25 +115,33 @@ export class PredictPage {
       }
     }  
 
-  choosedItem(ev: any){
-      console.log(ev)
-      this.predictSC()
+  choosedItem(item,ev: number){
+      console.log(item)
+      this.searchStatus = false;
+      this.choosed_item = item;
+      this.id = ev;
   }
 
   convert2Percent(item:any){
     var percent = 0;
     for(var i=0; i<this.chartLabels.length;i++){
       percent = item[this.chartLabels[i]]
-      console.log(percent)
       this.chartData[i] = percent
     }
+    console.log(this.chartData)
+    let self = this
+    this.hasilPrediksi = this.chartData.findIndex(function(num){return num==Math.max.apply(null,self.chartData)})
   }
 
   predictSC(){
-    let query = 'predict/run-predict?d={"matkul":"mat219","smt":"3","value":"2,3,7"}&v=1'
-    
+    this.predictStatus = false
+    let mkid = this.allData[this.id]['id']
+    let query = 'predict/predict?mkid=' + mkid + '&studyhour=' + this.studyHour
+    let token = localStorage.getItem('token')
+    console.log(token)
     let header= new Headers();
     header.append('Content-type', 'application/json' ); 
+    header.append('Authorization',token)
     this.presentLoadingText();
     this.http.get(this.data.base_url+query,{headers:header})
     .subscribe(
@@ -109,6 +155,7 @@ export class PredictPage {
         }
         else{
           console.log('gagal predict')
+          this.loading.dismiss();
         }
       }
     )

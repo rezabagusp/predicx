@@ -22,16 +22,36 @@
   <ion-grid>
     <ion-row>
       <ion-col col-12>
-        <ion-searchbar (ionInput)="getItems($event)" placeholder="Cari Mata Kuliah"></ion-searchbar>
+        <ion-searchbar [(ngModel)]='choosed_item' (ionInput)="getItems($event)" placeholder="Cari Mata Kuliah"></ion-searchbar>
       </ion-col>
       <ion-col col-12>
-        <ion-list>
-          <ion-item *ngFor="let item of items">
-            <div (tap)="choosedItem(item)">
+        <ion-list *ngIf="searchStatus">
+          <ion-item *ngFor="let item of items;let i = index">
+            <div (tap)="choosedItem(item,i)">
               {{ item }}
             </div>
           </ion-item>
         </ion-list>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label>Durasi Jam Belajar</ion-label>
+            <ion-select [(ngModel)]="studyHour" [selectOptions]="selectOptions">
+              <ion-option *ngFor="let hour of hours" [value]="hour">{{ hour }} Jam</ion-option>
+            </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-12 text-center>
+          <button ion-button (tap)='predictSC()'>Predict</button>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="predictStatus">
+      <ion-col col-12 text-center>
+          Hasil Prediksi Mata Kuliah {{ choosed_item }} : {{ chartLabels[hasilPrediksi] }}
       </ion-col>
     </ion-row>
     <ion-row>

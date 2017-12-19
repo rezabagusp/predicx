@@ -23,22 +23,6 @@ class MataKuliah{
             return null;
         })
     }
-    // matkul/prasyarat?mid=1
-    getSyarat(req,res){ //ambil prasyarat matkul
-        if(!req.query.mid){
-            res.json({status: false, message: "please include parameter 'mid' as mata kuliah id"});
-        }else{
-            var matkul_id = req.query.mid;
-            syaratmatakuliah.findAll({
-                attributes: ['id'],
-                include: [{model: matakuliah, as: 'mk', attributes: ['nama_mata_kuliah','kode_mata_kuliah'], where: {id:matkul_id}},{model: matakuliah, as: 'smk', attributes: ['nama_mata_kuliah','kode_mata_kuliah']}],
-            }).then(function(data){
-                res.json({status: true, message: "success", data: data});
-            }).catch(function(err){
-                res.json({status: false, message: "an error occured", err: err})
-            })
-        }
-    }
 
     getMatkul(req,res){ //ambil matkul yang mau diprediksi
         var mhsInfo = Auth.tokenCheck(req.headers['authorization']);

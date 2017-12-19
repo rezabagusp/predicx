@@ -47,11 +47,16 @@ class Predictor{
                             var mutu = {'E':0, 'D':1, 'C':2, 'BC':3, 'B':4, 'AB':5, 'A':6};
                             for(var l in listPrasyarat){
                                 let i = matkul.findIndex(x => x.mataKuliah.kode_mata_kuliah == listPrasyarat[l]);
-                                mk[l] = mutu[matkul[i].nilaiMutu.huruf_mutu];
+                                if(i !== -1){
+                                    mk[l] = mutu[matkul[i].nilaiMutu.huruf_mutu];
+                                }else{
+                                    res.status(400).json({status:false,message:"huruf mutu "+listPrasyarat[l]+" tidak ada"});
+                                }
                             }
                             // console.log(mk);
                             let model = "smt"+semester+"_"+kodemk;
                             let value = mk.join()+","+jamBelajar;
+                            console.log(value);
                             let py_options = {
                                 scriptPath: __dirname+"/../../predictor/",
                                 mode: 'json',
@@ -64,7 +69,7 @@ class Predictor{
                                 }else{
                                     let predicted = result[0];
                                     if(predicted.message.indexOf("No such model") !== -1)
-                                        res.status(500).json({status: false, message: 'Predicition failed: '+predicted.message});
+                                        res.status(500).json({status: false, message: 'Prediction failed: '+predicted.message});
                                     else
                                         res.status(200).json({status: true, message: 'Prediction success!', results: predicted});
                                 }

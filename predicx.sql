@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 100116
 File Encoding         : 65001
 
-Date: 2017-12-05 20:10:23
+Date: 2017-12-19 19:01:08
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -47,6 +47,8 @@ CREATE TABLE `historymatakuliahs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `fk_mahasiswa_id` int(11) DEFAULT NULL,
   `fk_mata_kuliah_id` int(11) DEFAULT NULL,
+  `fk_nilai_mutu_id` int(11) DEFAULT NULL,
+  `status` varchar(255) DEFAULT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   PRIMARY KEY (`id`),
@@ -54,11 +56,34 @@ CREATE TABLE `historymatakuliahs` (
   KEY `fk_mata_kuliah_id` (`fk_mata_kuliah_id`),
   CONSTRAINT `historymatakuliahs_ibfk_1` FOREIGN KEY (`fk_mahasiswa_id`) REFERENCES `mahasiswas` (`id`),
   CONSTRAINT `historymatakuliahs_ibfk_2` FOREIGN KEY (`fk_mata_kuliah_id`) REFERENCES `matakuliahs` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of historymatakuliahs
 -- ----------------------------
+INSERT INTO `historymatakuliahs` VALUES ('1', '1', '4', '4', null, '2017-12-19 08:13:35', '2017-12-19 08:13:44');
+INSERT INTO `historymatakuliahs` VALUES ('2', '1', '5', '4', null, '2017-12-19 08:13:35', '2017-12-19 08:13:44');
+INSERT INTO `historymatakuliahs` VALUES ('3', '3', '4', '1', null, '2017-12-19 08:13:35', '2017-12-19 08:13:44');
+INSERT INTO `historymatakuliahs` VALUES ('4', '3', '5', '1', null, '2017-12-19 08:13:35', '2017-12-19 08:13:44');
+INSERT INTO `historymatakuliahs` VALUES ('5', '3', '1', '1', null, '2017-12-19 08:13:35', '2017-12-19 08:13:44');
+INSERT INTO `historymatakuliahs` VALUES ('6', '3', '2', '1', null, '2017-12-19 08:13:35', '2017-12-19 08:13:44');
+INSERT INTO `historymatakuliahs` VALUES ('7', '3', '3', '2', null, '2017-12-19 08:13:35', '2017-12-19 08:13:44');
+INSERT INTO `historymatakuliahs` VALUES ('8', '3', '6', '1', null, '2017-12-19 08:13:35', '2017-12-19 08:13:44');
+INSERT INTO `historymatakuliahs` VALUES ('9', '3', '7', '1', null, '2017-12-19 08:13:35', '2017-12-19 08:13:44');
+INSERT INTO `historymatakuliahs` VALUES ('10', '3', '8', '1', null, '2017-12-19 08:13:35', '2017-12-19 08:13:44');
+INSERT INTO `historymatakuliahs` VALUES ('11', '3', '9', '1', null, '2017-12-19 08:13:35', '2017-12-19 08:13:44');
+INSERT INTO `historymatakuliahs` VALUES ('12', '3', '10', '1', null, '2017-12-19 08:13:35', '2017-12-19 08:13:44');
+INSERT INTO `historymatakuliahs` VALUES ('13', '3', '11', '1', null, '2017-12-19 08:13:35', '2017-12-19 08:13:44');
+INSERT INTO `historymatakuliahs` VALUES ('14', '3', '12', '2', null, '2017-12-19 08:13:35', '2017-12-19 08:13:44');
+INSERT INTO `historymatakuliahs` VALUES ('15', '3', '19', '1', null, '2017-12-19 08:13:35', '2017-12-19 08:13:44');
+INSERT INTO `historymatakuliahs` VALUES ('16', '3', '20', '1', null, '2017-12-19 08:13:35', '2017-12-19 08:13:44');
+INSERT INTO `historymatakuliahs` VALUES ('17', '3', '21', '1', null, '2017-12-19 08:13:35', '2017-12-19 08:13:44');
+INSERT INTO `historymatakuliahs` VALUES ('18', '3', '22', '1', null, '2017-12-19 08:13:35', '2017-12-19 08:13:44');
+INSERT INTO `historymatakuliahs` VALUES ('19', '3', '25', '1', null, '2017-12-19 08:13:35', '2017-12-19 08:13:44');
+INSERT INTO `historymatakuliahs` VALUES ('20', '3', '26', '1', null, '2017-12-19 08:13:35', '2017-12-19 08:13:44');
+INSERT INTO `historymatakuliahs` VALUES ('21', '3', '27', '1', null, '2017-12-19 08:13:35', '2017-12-19 08:13:44');
+INSERT INTO `historymatakuliahs` VALUES ('22', '3', '28', '1', null, '2017-12-19 08:13:35', '2017-12-19 08:13:44');
+INSERT INTO `historymatakuliahs` VALUES ('23', '4', '1', '2', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 
 -- ----------------------------
 -- Table structure for mahasiswamodels
@@ -126,7 +151,7 @@ CREATE TABLE `matakuliahs` (
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of matakuliahs
@@ -144,6 +169,28 @@ INSERT INTO `matakuliahs` VALUES ('10', 'kom325', 'Komputasi Numerik', '5', '0',
 INSERT INTO `matakuliahs` VALUES ('11', 'kom200', 'Dasar Pemrograman', '3', '0', '2017-12-05 19:15:46', '2017-12-05 19:15:49');
 INSERT INTO `matakuliahs` VALUES ('12', 'mat331', 'Pemrograman Tak Linear', '5', '1', '2017-12-05 19:16:48', '2017-12-05 19:16:51');
 INSERT INTO `matakuliahs` VALUES ('13', 'mat431', 'Pemodelan Riset Operasi', '7', '1', '2017-12-05 19:17:29', '2017-12-05 19:17:32');
+INSERT INTO `matakuliahs` VALUES ('14', 'stk211', 'Metode Penarikan Contoh', '4', '1', '2017-12-19 08:01:12', '2017-12-19 08:01:12');
+INSERT INTO `matakuliahs` VALUES ('15', 'stk222', 'Perancangan Percobaan', '4', '1', '2017-12-19 08:01:12', '2017-12-19 08:01:12');
+INSERT INTO `matakuliahs` VALUES ('16', 'stk331', 'Analisis Regresi', '5', '1', '2017-12-19 08:01:12', '2017-12-19 08:01:12');
+INSERT INTO `matakuliahs` VALUES ('17', 'stk351', 'Pengantar Analisis Kategorik', '6', '1', '2017-12-19 08:01:12', '2017-12-19 08:01:12');
+INSERT INTO `matakuliahs` VALUES ('18', 'stk351', 'Metode Peramalan Deret Waktu', '6', '1', '2017-12-19 08:01:12', '2017-12-19 08:01:12');
+INSERT INTO `matakuliahs` VALUES ('19', 'kpm130', 'Sosiologi Umum', '1', '0', '2017-12-19 08:01:12', '2017-12-19 08:01:12');
+INSERT INTO `matakuliahs` VALUES ('20', 'agb100', 'Pengantar Kewirausahaan', '1', '0', '2017-12-19 08:01:12', '2017-12-19 08:01:12');
+INSERT INTO `matakuliahs` VALUES ('21', 'stk202', 'Pengantar Hitung Peluang', '3', '0', '2017-12-19 08:01:12', '2017-12-19 08:01:12');
+INSERT INTO `matakuliahs` VALUES ('22', 'eko100', 'Ekonomi Umum', '3', '0', '2017-12-19 08:01:12', '2017-12-19 08:01:12');
+INSERT INTO `matakuliahs` VALUES ('23', 'ipb100', 'Agama', '2', '0', '2017-12-19 08:01:12', '2017-12-19 08:01:12');
+INSERT INTO `matakuliahs` VALUES ('24', 'ipb111', 'Pancasila', '2', '0', '2017-12-19 08:01:12', '2017-12-19 08:01:12');
+INSERT INTO `matakuliahs` VALUES ('25', 'kom205', 'Basis Data', '4', '0', '2017-12-19 08:01:12', '2017-12-19 08:01:12');
+INSERT INTO `matakuliahs` VALUES ('26', 'kom206', 'Organisasi dan Arsitektur Komputer', '6', '0', '2017-12-19 08:01:12', '2017-12-19 08:01:12');
+INSERT INTO `matakuliahs` VALUES ('27', 'kom203', 'Rangkaian Digital', '3', '0', '2017-12-19 08:01:12', '2017-12-19 08:01:12');
+INSERT INTO `matakuliahs` VALUES ('28', 'kom207', 'Struktur Data', '4', '0', '2017-12-19 08:01:12', '2017-12-19 08:01:12');
+INSERT INTO `matakuliahs` VALUES ('29', 'ikk233', 'Perilaku Konsumen', '3', '1', '2017-12-19 08:01:12', '2017-12-19 08:01:12');
+INSERT INTO `matakuliahs` VALUES ('30', 'man111', 'Pengantar Manajemen', '3', '1', '2017-12-19 08:01:12', '2017-12-19 08:01:12');
+INSERT INTO `matakuliahs` VALUES ('31', 'kpm210', 'Dasar-Dasar Komunikasi', '3', '1', '2017-12-19 08:01:12', '2017-12-19 08:01:12');
+INSERT INTO `matakuliahs` VALUES ('32', 'ikk322', 'Pengembangan Karakter', '3', '1', '2017-12-19 08:01:12', '2017-12-19 08:01:12');
+INSERT INTO `matakuliahs` VALUES ('33', 'kom341', 'Pengantar Teknologi Spasial', '5', '1', '2017-12-19 08:01:12', '2017-12-19 08:01:12');
+INSERT INTO `matakuliahs` VALUES ('34', 'kom415', 'Pengantar SIstem Tertanam dan Robotika', '5', '1', '2017-12-19 08:01:12', '2017-12-19 08:01:12');
+INSERT INTO `matakuliahs` VALUES ('35', 'kom431', 'Temu Kembali Informasi', '5', '1', '2017-12-19 08:01:12', '2017-12-19 08:01:12');
 
 -- ----------------------------
 -- Table structure for nilaimatakuliahs
@@ -174,21 +221,28 @@ CREATE TABLE `nilaimutus` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `batas_bawah` int(11) DEFAULT NULL,
   `batas_atas` int(11) DEFAULT NULL,
-  `huruf_mutu` int(11) DEFAULT NULL,
+  `huruf_mutu` varchar(255) DEFAULT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of nilaimutus
 -- ----------------------------
+INSERT INTO `nilaimutus` VALUES ('1', '75', '100', 'A', '2017-12-19 07:30:55', '2017-12-19 07:30:55');
+INSERT INTO `nilaimutus` VALUES ('2', '70', '75', 'AB', '2017-12-19 07:30:55', '2017-12-19 07:30:55');
+INSERT INTO `nilaimutus` VALUES ('3', '65', '70', 'B', '2017-12-19 07:30:55', '2017-12-19 07:30:55');
+INSERT INTO `nilaimutus` VALUES ('4', '60', '65', 'BC', '2017-12-19 07:30:55', '2017-12-19 07:30:55');
+INSERT INTO `nilaimutus` VALUES ('5', '55', '60', 'C', '2017-12-19 07:30:55', '2017-12-19 07:30:55');
+INSERT INTO `nilaimutus` VALUES ('6', '50', '55', 'D', '2017-12-19 07:30:55', '2017-12-19 07:30:55');
+INSERT INTO `nilaimutus` VALUES ('7', '0', '50', 'E', '2017-12-19 07:30:55', '2017-12-19 07:30:55');
 
 -- ----------------------------
--- Table structure for syaratmatakuilahs
+-- Table structure for syaratmatakuliahs
 -- ----------------------------
-DROP TABLE IF EXISTS `syaratmatakuilahs`;
-CREATE TABLE `syaratmatakuilahs` (
+DROP TABLE IF EXISTS `syaratmatakuliahs`;
+CREATE TABLE `syaratmatakuliahs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `fk_mata_kuliah_id` int(11) DEFAULT NULL,
   `syarat_mata_kuliah_id` int(11) DEFAULT NULL,
@@ -196,29 +250,45 @@ CREATE TABLE `syaratmatakuilahs` (
   `updatedAt` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_mata_kuliah_id` (`fk_mata_kuliah_id`),
-  CONSTRAINT `syaratmatakuilahs_ibfk_1` FOREIGN KEY (`fk_mata_kuliah_id`) REFERENCES `matakuliahs` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
+  CONSTRAINT `syaratmatakuliahs_ibfk_1` FOREIGN KEY (`fk_mata_kuliah_id`) REFERENCES `matakuliahs` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
--- Records of syaratmatakuilahs
+-- Records of syaratmatakuliahs
 -- ----------------------------
-INSERT INTO `syaratmatakuilahs` VALUES ('1', '1', '4', '2017-12-05 19:23:05', '2017-12-05 19:23:08');
-INSERT INTO `syaratmatakuilahs` VALUES ('2', '1', '5', '2017-12-05 19:23:30', '2017-12-05 19:23:32');
-INSERT INTO `syaratmatakuilahs` VALUES ('3', '2', '4', '2017-12-05 19:23:52', '2017-12-05 19:23:55');
-INSERT INTO `syaratmatakuilahs` VALUES ('4', '2', '5', '2017-12-05 19:24:05', '2017-12-05 19:24:09');
-INSERT INTO `syaratmatakuilahs` VALUES ('5', '2', '7', '2017-12-05 19:24:37', '2017-12-05 19:24:40');
-INSERT INTO `syaratmatakuilahs` VALUES ('6', '2', '6', '2017-12-05 19:25:00', '2017-12-05 19:25:02');
-INSERT INTO `syaratmatakuilahs` VALUES ('7', '2', '1', '2017-12-05 19:25:10', '2017-12-05 19:25:13');
-INSERT INTO `syaratmatakuilahs` VALUES ('8', '3', '4', '2017-12-05 19:25:34', '2017-12-05 19:25:36');
-INSERT INTO `syaratmatakuilahs` VALUES ('9', '3', '6', '2017-12-05 19:26:14', '2017-12-05 19:26:17');
-INSERT INTO `syaratmatakuilahs` VALUES ('10', '3', '8', '2017-12-05 19:26:23', '2017-12-05 19:26:26');
-INSERT INTO `syaratmatakuilahs` VALUES ('11', '12', '4', '2017-12-05 19:27:41', '2017-12-05 19:27:44');
-INSERT INTO `syaratmatakuilahs` VALUES ('12', '12', '5', '2017-12-05 19:27:53', '2017-12-05 19:27:56');
-INSERT INTO `syaratmatakuilahs` VALUES ('13', '12', '9', '2017-12-05 19:28:09', '2017-12-05 19:28:12');
-INSERT INTO `syaratmatakuilahs` VALUES ('14', '12', '10', '2017-12-05 19:28:44', '2017-12-05 19:28:47');
-INSERT INTO `syaratmatakuilahs` VALUES ('15', '13', '4', '2017-12-05 19:29:06', '2017-12-05 19:29:09');
-INSERT INTO `syaratmatakuilahs` VALUES ('16', '13', '5', '2017-12-05 19:29:15', '2017-12-05 19:29:17');
-INSERT INTO `syaratmatakuilahs` VALUES ('17', '13', '2', '2017-12-05 19:29:29', '2017-12-05 19:29:31');
-INSERT INTO `syaratmatakuilahs` VALUES ('18', '13', '3', '2017-12-05 19:29:49', '2017-12-05 19:29:51');
-INSERT INTO `syaratmatakuilahs` VALUES ('19', '13', '6', '2017-12-05 19:30:02', '2017-12-05 19:30:04');
-INSERT INTO `syaratmatakuilahs` VALUES ('20', '13', '11', '2017-12-05 19:30:23', '2017-12-05 19:30:25');
+INSERT INTO `syaratmatakuliahs` VALUES ('1', '1', '4', '2017-12-19 08:08:08', '2017-12-19 08:08:08');
+INSERT INTO `syaratmatakuliahs` VALUES ('2', '1', '5', '2017-12-19 08:08:08', '2017-12-19 08:08:08');
+INSERT INTO `syaratmatakuliahs` VALUES ('3', '2', '1', '2017-12-19 08:08:08', '2017-12-19 08:08:08');
+INSERT INTO `syaratmatakuliahs` VALUES ('4', '2', '4', '2017-12-19 08:08:08', '2017-12-19 08:08:08');
+INSERT INTO `syaratmatakuliahs` VALUES ('5', '2', '5', '2017-12-19 08:08:08', '2017-12-19 08:08:08');
+INSERT INTO `syaratmatakuliahs` VALUES ('6', '2', '6', '2017-12-19 08:08:08', '2017-12-19 08:08:08');
+INSERT INTO `syaratmatakuliahs` VALUES ('7', '2', '7', '2017-12-19 08:08:08', '2017-12-19 08:08:08');
+INSERT INTO `syaratmatakuliahs` VALUES ('8', '3', '4', '2017-12-19 08:08:08', '2017-12-19 08:08:08');
+INSERT INTO `syaratmatakuliahs` VALUES ('9', '3', '6', '2017-12-19 08:08:08', '2017-12-19 08:08:08');
+INSERT INTO `syaratmatakuliahs` VALUES ('10', '3', '8', '2017-12-19 08:08:08', '2017-12-19 08:08:08');
+INSERT INTO `syaratmatakuliahs` VALUES ('11', '12', '4', '2017-12-19 08:08:08', '2017-12-19 08:08:08');
+INSERT INTO `syaratmatakuliahs` VALUES ('12', '12', '5', '2017-12-19 08:08:08', '2017-12-19 08:08:08');
+INSERT INTO `syaratmatakuliahs` VALUES ('13', '12', '9', '2017-12-19 08:08:08', '2017-12-19 08:08:08');
+INSERT INTO `syaratmatakuliahs` VALUES ('14', '12', '10', '2017-12-19 08:08:08', '2017-12-19 08:08:08');
+INSERT INTO `syaratmatakuliahs` VALUES ('15', '13', '2', '2017-12-19 08:08:08', '2017-12-19 08:08:08');
+INSERT INTO `syaratmatakuliahs` VALUES ('16', '13', '3', '2017-12-19 08:08:08', '2017-12-19 08:08:08');
+INSERT INTO `syaratmatakuliahs` VALUES ('17', '13', '4', '2017-12-19 08:08:08', '2017-12-19 08:08:08');
+INSERT INTO `syaratmatakuliahs` VALUES ('18', '13', '5', '2017-12-19 08:08:08', '2017-12-19 08:08:08');
+INSERT INTO `syaratmatakuliahs` VALUES ('19', '13', '6', '2017-12-19 08:08:08', '2017-12-19 08:08:08');
+INSERT INTO `syaratmatakuliahs` VALUES ('20', '13', '11', '2017-12-19 08:08:08', '2017-12-19 08:08:08');
+INSERT INTO `syaratmatakuliahs` VALUES ('21', '29', '19', '2017-12-19 08:08:08', '2017-12-19 08:08:08');
+INSERT INTO `syaratmatakuliahs` VALUES ('22', '29', '20', '2017-12-19 08:08:08', '2017-12-19 08:08:08');
+INSERT INTO `syaratmatakuliahs` VALUES ('23', '30', '19', '2017-12-19 08:08:08', '2017-12-19 08:08:08');
+INSERT INTO `syaratmatakuliahs` VALUES ('24', '30', '20', '2017-12-19 08:08:08', '2017-12-19 08:08:08');
+INSERT INTO `syaratmatakuliahs` VALUES ('25', '30', '22', '2017-12-19 08:08:08', '2017-12-19 08:08:08');
+INSERT INTO `syaratmatakuliahs` VALUES ('26', '31', '19', '2017-12-19 08:08:08', '2017-12-19 08:08:08');
+INSERT INTO `syaratmatakuliahs` VALUES ('27', '32', '23', '2017-12-19 08:08:08', '2017-12-19 08:08:08');
+INSERT INTO `syaratmatakuliahs` VALUES ('28', '32', '24', '2017-12-19 08:08:08', '2017-12-19 08:08:08');
+INSERT INTO `syaratmatakuliahs` VALUES ('29', '33', '7', '2017-12-19 08:08:08', '2017-12-19 08:08:08');
+INSERT INTO `syaratmatakuliahs` VALUES ('30', '33', '25', '2017-12-19 08:08:08', '2017-12-19 08:08:08');
+INSERT INTO `syaratmatakuliahs` VALUES ('31', '34', '26', '2017-12-19 08:08:08', '2017-12-19 08:08:08');
+INSERT INTO `syaratmatakuliahs` VALUES ('32', '34', '27', '2017-12-19 08:08:08', '2017-12-19 08:08:08');
+INSERT INTO `syaratmatakuliahs` VALUES ('33', '35', '8', '2017-12-19 08:08:08', '2017-12-19 08:08:08');
+INSERT INTO `syaratmatakuliahs` VALUES ('34', '35', '11', '2017-12-19 08:08:08', '2017-12-19 08:08:08');
+INSERT INTO `syaratmatakuliahs` VALUES ('35', '35', '21', '2017-12-19 08:08:08', '2017-12-19 08:08:08');
+INSERT INTO `syaratmatakuliahs` VALUES ('36', '35', '28', '2017-12-19 08:08:08', '2017-12-19 08:08:08');

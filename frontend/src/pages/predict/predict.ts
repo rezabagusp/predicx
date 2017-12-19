@@ -49,7 +49,6 @@ export class PredictPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public data: DataProvider, public http: Http, public loadingCtrl: LoadingController) {
     this.hours = Array.from(new Array(24),(val,index)=>index+1);
     console.log(this.hours)
-    this.initializeItems();
   }
   
   presentLoadingText() {
@@ -61,6 +60,7 @@ export class PredictPage {
   }
 
   ionViewDidLoad() {
+    this.initializeItems();
     console.log('ionViewDidLoad PredictPage');
   }
 

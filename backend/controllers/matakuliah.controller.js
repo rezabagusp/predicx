@@ -1,5 +1,6 @@
 var express = require('express'),
     sequelize = require('../dbconnection');
+var Auth = require('./authentication.controller');
 
 var matakuliah = sequelize.import('./../models/mataKuliah.model');
 var syaratmatakuliah = sequelize.import('./../models/syaratMataKuliah.model');
@@ -12,6 +13,16 @@ syaratmatakuliah.belongsTo(matakuliah, {as: 'smk', foreignKey: 'syarat_mata_kuli
 class MataKuliah{
     constructor(){}
 
+    getPrasyarat(matkulId){
+        return syaratmatakuliah.findAll({
+            attributes: ['id'],
+            include: [{model: matakuliah, as: 'mk', attributes: ['nama_mata_kuliah','kode_mata_kuliah', 'semester'], where: {id:matkulId}},{model: matakuliah, as: 'smk', attributes: ['nama_mata_kuliah','kode_mata_kuliah']}],
+        }).then(function(data){
+            return data;
+        }).catch(function(err){
+            return null;
+        })
+    }
     // matkul/prasyarat?mid=1
     getSyarat(req,res){ //ambil prasyarat matkul
         if(!req.query.mid){
@@ -30,13 +41,20 @@ class MataKuliah{
     }
 
     getMatkul(req,res){ //ambil matkul yang mau diprediksi
-        matakuliah.findAll({
-            where: {is_class: true}
-        }).then(function(data){
-            res.json({status: true, message: "success", data: data});
-        }).catch(function(err){
-            res.json({status: false, message: "an error occured", err: err})
-        })
+        var mhsInfo = Auth.tokenCheck(req.headers['authorization']);
+
+        if(mhsInfo != null){
+            matakuliah.findAll({
+                where: {is_class: true, semester: {$lte: mhsInfo.smt}}
+            }).then(function(data){
+                res.status(200).json({status: true, message: "success", data: data});
+            }).catch(function(err){
+                res.status(500).json({status: false, message: "an error occured", err: err})
+            })
+        }else{
+            res.status(401).json({status:false, message:"Authentication failed"});
+        }
+        
     }
 }
 

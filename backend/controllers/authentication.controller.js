@@ -32,7 +32,7 @@ class Authentication{
     getUserInfo(req, res){
         var jwt_decoded = this.tokenCheck(req.headers['authorization']);
         if(!jwt_decoded){
-            res.json({status: false, message: "token error"});
+            res.status(401).json({status: false, message: "token error"});
         }else{
             var username = jwt_decoded.nama_user;
             mahasiswa.findOne({
@@ -49,9 +49,9 @@ class Authentication{
                 data['tahun_masuk'] = "20"+mhs.nim_mahasiswa.substring(3,5);
                 data['semester'] = jwt_decoded.smt;
 
-                res.json({status: true, message: "token valid", mhs_info: data});
+                res.status(200).json({status: true, message: "token valid", mhs_info: data});
             }).catch(function(err){
-                res.json({status: false, message: "query error", err: err});
+                res.status(500).json({status: false, message: "query error", err: err});
             })
         }
 
@@ -68,7 +68,7 @@ class Authentication{
                 nama_user:username,
                 smt:data.semester,
                 iat: login_time,
-                expired: login_time + 3600 // expired in 1 hour
+                exp: login_time + 3600 // expired in 1 hour
             };
             var token = jwt.sign(jwtData, '1n1k3y');
             if(!mhs){
@@ -103,7 +103,7 @@ class Authentication{
             .then(data => {
                 console.log('masuk then')
                 if(data.indexOf('null') !== -1){
-                    res.json({status: false, message: 'wrong username or password'});
+                    res.status(401).json({status: false, message: 'wrong username or password'});
                 }else{
                     data = JSON.parse(data);
                     
@@ -132,13 +132,13 @@ class Authentication{
                         .then(function(retval){
                             if(retval !== null){
                                 console.log(retval);
-                                res.json({status: true, message: 'login success yang baru', mhs_info: mhs_info, token: retval});
+                                res.status(200).json({status: true, message: 'login success yang baru', mhs_info: mhs_info, token: retval});
                             }else{
-                                res.json({status: false, message: 'an error occured', err: retval});
+                                res.status(403).json({status: false, message: 'an error occured', err: retval});
                             }
                         })
                         .catch(function(err){
-                            res.json({status: false, message: 'an error occured', err: err});
+                            res.status(500).json({status: false, message: 'an error occured', err: err});
                         })
                     
                 }

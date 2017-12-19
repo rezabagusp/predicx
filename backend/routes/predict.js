@@ -8,6 +8,11 @@ router.get('/run-predict', function(req, res, next){
     predict.run_predict(req, res);
 });
 
+router.get('/predict', function(req, res, next){
+    predict.predict(req, res);
+});
+
+
 router.get('/test-join', function(req, res, next){
     // console.log('masuk predict routes')
     predict.test_join(req, res);

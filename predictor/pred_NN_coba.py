@@ -50,7 +50,7 @@ if __name__ == '__main__':
 			mlp = joblib.load(dirname+'/model/'+model_name+'.pkl')
 			scaler = joblib.load(dirname+'/model/'+model_name+'_scaler.pkl')
 	except FileNotFoundError:
-		print(json.dumps({"message": "No such model name!"}))
+		print(json.dumps({"message": "No such model name! ~> '"+model_name+"' not exist"}))
 		sys.exit()
 
 	x = mlp.predict(scaler.transform([data]))[0]

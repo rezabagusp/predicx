@@ -45,35 +45,40 @@ class Predictor{
                         }).then(function(matkul){
                             var mk = new Array();
                             var mutu = {'E':0, 'D':1, 'C':2, 'BC':3, 'B':4, 'AB':5, 'A':6};
+                            var notFound = false;
                             for(var l in listPrasyarat){
                                 let i = matkul.findIndex(x => x.mataKuliah.kode_mata_kuliah == listPrasyarat[l]);
                                 if(i !== -1){
                                     mk[l] = mutu[matkul[i].nilaiMutu.huruf_mutu];
                                 }else{
+                                    notFound = true;
                                     res.status(400).json({status:false,message:"huruf mutu "+listPrasyarat[l]+" tidak ada"});
+                                    break;
                                 }
                             }
-                            // console.log(mk);
-                            let model = "smt"+semester+"_"+kodemk;
-                            let value = mk.join()+","+jamBelajar;
-                            console.log(value);
-                            let py_options = {
-                                scriptPath: __dirname+"/../../predictor/",
-                                mode: 'json',
-                                args: ["-m", model, "-d", value]    
-                            };
-                
-                            pyshell.run('pred_NN_coba.py', py_options, function(err, result){
-                                if(err){
-                                    res.json({status: false, message: err});
-                                }else{
-                                    let predicted = result[0];
-                                    if(predicted.message.indexOf("No such model") !== -1)
-                                        res.status(500).json({status: false, message: 'Prediction failed: '+predicted.message});
-                                    else
-                                        res.status(200).json({status: true, message: 'Prediction success!', results: predicted});
-                                }
-                            });
+                            
+                            if(!notFound){
+                                let model = "smt"+semester+"_"+kodemk;
+                                let value = mk.join()+","+jamBelajar;
+                                console.log(value);
+                                let py_options = {
+                                    scriptPath: __dirname+"/../../predictor/",
+                                    mode: 'json',
+                                    args: ["-m", model, "-d", value]    
+                                };
+                    
+                                pyshell.run('pred_NN_coba.py', py_options, function(err, result){
+                                    if(err){
+                                        res.json({status: false, message: err});
+                                    }else{
+                                        let predicted = result[0];
+                                        if(predicted.message.indexOf("No such model") !== -1)
+                                            res.status(500).json({status: false, message: 'Prediction failed: '+predicted.message});
+                                        else
+                                            res.status(200).json({status: true, message: 'Prediction success!', results: predicted});
+                                    }
+                                });
+                            }
                         }).catch(function(err){
                             res.status(500).json({status:false, message:"An error occured", err: err});
                         });

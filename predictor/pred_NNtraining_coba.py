@@ -122,7 +122,7 @@ if __name__ == '__main__':
 
 	nilai = clean_file(nilai)
 
-	X_train,X_test,y_train,y_test = splitting(nilai,0.10,32)
+	X_train,X_test,y_train,y_test = splitting(nilai,0.15,32)
 	X_train,X_test = preprocessing(X_train,X_test)
 
 	if(is_testing):

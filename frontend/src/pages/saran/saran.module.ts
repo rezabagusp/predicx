@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { Saran } from './saran';
+import { SaranPage } from './saran';
 
 @NgModule({
   declarations: [
-    Saran,
+    SaranPage,
   ],
   imports: [
-    IonicPageModule.forChild(Saran),
+    IonicPageModule.forChild(SaranPage),
   ],
 })
 export class SaranModule {}

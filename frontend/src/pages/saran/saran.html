@@ -6,13 +6,28 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>saran</ion-title>
-  </ion-navbar>
+  <ion-toolbar color="primary">
+        <ion-navbar>
+          <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+          </button>
+          <ion-title>Saran</ion-title>
+        </ion-navbar>
+    </ion-toolbar>
 
 </ion-header>
 
-
 <ion-content padding>
-
+  <div style="font-size:20px" text-center>Best of 4 Predictions</div>
+  <div *ngFor='let matkul of [1,2,3,4]'>
+  <ion-card>
+    <ion-card-header>
+      STK321 - Analisis Regresi
+    </ion-card-header>
+    <ion-card-content>
+      Prediksi : A
+    </ion-card-content>
+  </ion-card>
+  </div>
 </ion-content>
+

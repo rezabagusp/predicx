@@ -52,7 +52,7 @@ class Predictor{
                                     mk[l] = mutu[matkul[i].nilaiMutu.huruf_mutu];
                                 }else{
                                     notFound = true;
-                                    res.status(400).json({status:false,message:"huruf mutu "+listPrasyarat[l]+" tidak ada"});
+                                    res.status(200).json({status:false,message:"huruf mutu "+listPrasyarat[l]+" tidak ada"});
                                     break;
                                 }
                             }

@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
 import { DataProvider } from './../../providers/data/data';
 import { Http,Headers } from '@angular/http';
+import { LoginPage } from '../login/login';
 
 /**
  * Generated class for the PredictPage page.
@@ -28,6 +29,8 @@ export class PredictPage {
   hours:any;
   id:number;
   hasilPrediksi:number;
+  alert:any;
+  loading:any;
   public chartLabels:string[] = ['A', 'AB', 'B','BC','C','D','E'];
   public chartData:number[]=[];
   public chartType:string = 'doughnut';
@@ -36,7 +39,6 @@ export class PredictPage {
     responsive: true,
     maintainAspectRatio: false
   }
-  loading:any;
   public chartColors: any[] = [
   { 
     backgroundColor:["green", "#c57f28", "yellow", "#05234d", "#B9E8E0","#d64b4b","#632b58"] 
@@ -46,7 +48,8 @@ export class PredictPage {
     subTitle: 'Pilih durasi jam per minggu',
     mode: 'md'
   };
-  constructor(public navCtrl: NavController, public navParams: NavParams, public data: DataProvider, public http: Http, public loadingCtrl: LoadingController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public data: DataProvider, 
+              public http: Http, public loadingCtrl: LoadingController, public alertCtrl: AlertController) {
     this.hours = Array.from(new Array(24),(val,index)=>index+1);
     console.log(this.hours)
   }
@@ -57,6 +60,46 @@ export class PredictPage {
       content: 'Loading Please Wait...'
     });
     this.loading.present();
+  }
+
+  presentAuthAlert() {
+    this.alert = this.alertCtrl.create({
+      title: 'Authentication Failed',
+      subTitle: 'Token anda sudah kadarluasa, silahkan login ulang',
+      buttons: [
+      {
+        text: 'Ok',
+        handler: () => {
+          this.navCtrl.setRoot(LoginPage)
+        }
+      }],
+      enableBackdropDismiss : false
+    });
+    this.alert.present();
+  }
+
+  presentSyaratErrorAlert(message) {
+    this.alert = this.alertCtrl.create({
+      title: 'Prediksi Error',
+      subTitle: message,
+      buttons: ['Dismiss']
+    });
+    this.alert.present();
+  }
+
+  presentConnectionErrorAlert() {
+    this.alert = this.alertCtrl.create({
+      title: 'Connection Error',
+      subTitle: 'Silahkan cek konneksi internet anda',
+      buttons: [
+      {
+        text: 'Try Again',
+        handler: () => {
+          this.predictSC()
+        }
+      }]
+    });
+    this.alert.present();
   }
 
   ionViewDidLoad() {
@@ -90,6 +133,14 @@ export class PredictPage {
         else{
           console.log('gagal mengambil semua matakuliah')
         }
+      },
+      err =>{
+        if(err.status == 401){
+            this.presentAuthAlert()
+          }
+          else{
+            this.presentConnectionErrorAlert()
+          }
       }
     )
   }
@@ -156,7 +207,17 @@ export class PredictPage {
         else{
           console.log('gagal predict')
           this.loading.dismiss();
+          this.presentSyaratErrorAlert(response.message)
         }
+      },
+      err =>{
+        this.loading.dismiss();
+        if(err.status == 401){
+            this.presentAuthAlert()
+          }
+          else if(err.status == 500){
+            this.presentConnectionErrorAlert()
+          }
       }
     )
 

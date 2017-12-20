@@ -9,6 +9,7 @@ import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { LoginPage } from '../pages/login/login';
 import { PredictPage } from '../pages/predict/predict';
+import { SaranPage } from '../pages/saran/saran';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -23,7 +24,8 @@ import { AuthenticationProvider } from '../providers/authentication/authenticati
     HomePage,
     ListPage,
     LoginPage,
-    PredictPage
+    PredictPage,
+    SaranPage
   ],
   imports: [
     BrowserModule,
@@ -38,7 +40,8 @@ import { AuthenticationProvider } from '../providers/authentication/authenticati
     HomePage,
     ListPage,
     LoginPage,
-    PredictPage
+    PredictPage,
+    SaranPage
   ],
   providers: [
     StatusBar,

@@ -55,5 +55,6 @@ export class SaranPage {
             this.data.presentConnectionErrorAlert(this.predictSC())
           }
       }
+    )
   }
 }

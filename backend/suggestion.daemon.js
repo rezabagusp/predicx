@@ -34,7 +34,7 @@ async function updateSuggestion(status, mhsInfo, matkulId, data = null){
         }, {
             where: {fk_mata_kuliah_id: matkulId, fk_mahasiswa_id: mhsInfo}
         });
-        console.log("Suggestion Failed");
+        console.log("Suggestion Failed "+data.message);
     }
 }
 
@@ -43,7 +43,11 @@ async function predict(mhsInfo, matkulId, studyHour = 5){
     try{
         data = await Matkul.getPrasyarat(matkulId);
 
-        if(!data.length) updateSuggestion(false,mhsInfo,matkulId);
+        if(!data.length){
+            let message = "data prasayarat tidak ditemukan";
+            updateSuggestion(false,mhsInfo,matkulId,{message:message});
+            return null;
+        }
         
         var listPrasyarat = new Array();
         var semester = data[0].mk.semester;
@@ -69,7 +73,9 @@ async function predict(mhsInfo, matkulId, studyHour = 5){
             if(i !== -1){
                 mk[l] = mutu[matkul[i].nilaiMutu.huruf_mutu];
             }else{
-                updateSuggestion(false,mhsInfo,matkulId);
+                let message = "nilai matkul prasayarat ("+listPrasyarat[l]+") tidak tersedia";
+                updateSuggestion(false,mhsInfo,matkulId,{message:message});
+                return null;
             }
         }
 
@@ -88,8 +94,8 @@ async function predict(mhsInfo, matkulId, studyHour = 5){
             }else{
                 let predicted = result[0];
                 if(predicted.message.indexOf("No such model") !== -1){
-
-                    updateSuggestion(false,mhsInfo,matkulId);
+                    let message = "model untuk matkul ("+kodemk+") tidak tersedia"; 
+                    updateSuggestion(false,mhsInfo,matkulId,{message:message});
                 }else{
                     mutu = {'A':1,'AB':2,'B':3,'BC':4,'C':5,'D':6,'E':7};
                     let prediksi_mutu = mutu[predicted.prediksi_mutu];
@@ -107,8 +113,13 @@ async function predict(mhsInfo, matkulId, studyHour = 5){
 suggestion.sync();
 
 while(1){
+    var date = new Date();
+    var target = new Date(date.getFullYear(),date.getMonth(),date.getDate(),11);
     suggestion.findAll({
-        where: {status: "SUBMITTED"}
+        where: {$or: [
+            {status: "SUBMITTED"},
+            {updatedAt: {$lt: target}}
+        ]}
     }).then(function(suggest){
         if(suggest.length){
             for(var s in suggest){

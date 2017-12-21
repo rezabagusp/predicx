@@ -8,7 +8,9 @@ var mahasiswa = sequelize.import('./../models/mahasiswa.model');
 var historyMataKuliah = sequelize.import('./../models/historyMataKuliah.model');
 var matakuliah = sequelize.import('./../models/mataKuliah.model');
 var nilaiMutu = sequelize.import('./../models/nilaiMutu.model');
+var suggestion = sequelize.import('./../models/suggestion.model');
 
+//table historyMataKuliah relation
 mahasiswa.hasMany(historyMataKuliah, {foreignKey: 'fk_mahasiswa_id'});
 historyMataKuliah.belongsTo(mahasiswa, {foreignKey: 'fk_mahasiswa_id', targetKey: 'id'});
 matakuliah.hasMany(historyMataKuliah, {foreignKey: 'fk_mata_kuliah_id'});
@@ -16,9 +18,64 @@ historyMataKuliah.belongsTo(matakuliah, {foreignKey: 'fk_mata_kuliah_id', target
 nilaiMutu.hasMany(historyMataKuliah, {foreignKey: 'fk_nilai_mutu_id'});
 historyMataKuliah.belongsTo(nilaiMutu, {foreignKey: 'fk_nilai_mutu_id', targetKey: 'id'});
 
+//table suggestion relation
+mahasiswa.hasMany(suggestion, {foreignKey: 'fk_mahasiswa_id'});
+suggestion.belongsTo(mahasiswa, {foreignKey: 'fk_mahasiswa_id', targetKey: 'id'});
+matakuliah.hasMany(suggestion, {foreignKey: 'fk_mata_kuliah_id'});
+suggestion.belongsTo(matakuliah, {foreignKey: 'fk_mata_kuliah_id', targetKey: 'id'});
+nilaiMutu.hasMany(suggestion, {foreignKey: 'fk_nilai_mutu_id'});
+suggestion.belongsTo(nilaiMutu, {foreignKey: 'fk_nilai_mutu_id', targetKey: 'id'});
+
 class Predictor{
 
     constructor(){}
+
+    suggestion(req,res){
+        var mhsInfo = Auth.tokenCheck(req.headers['authorization']);
+        if(mhsInfo == null){
+            res.status(401).json({status:false,messsage:"Authentication failed"});
+        }else{
+            var username = mhsInfo.nama_user;
+        
+            mahasiswa.findOne({
+                where: {nama_user: username}
+            }).then(function(mhs){
+                suggestion.findAll({
+                    where: {fk_mahasiswa_id: mhs.id, status: "PREDICTED"},
+                    include: [{model: mahasiswa, attributes: ['nama_user', 'nama_mahasiswa', 'nim_mahasiswa']}, {model: matakuliah, attributes: ['kode_mata_kuliah', 'nama_mata_kuliah', 'semester']}, {model: nilaiMutu, attributes: ['huruf_mutu']}],                    
+                    order: [['fk_nilai_mutu_id'], ['confidence','DESC']]
+                }).then(function(suggest){
+                    if(!suggest.length){
+                        matakuliah.findAll({
+                            where: {is_class: true}
+                        }).then(function(matkul){
+                            var mk = new Array();
+
+                            for(var m in matkul){
+                                mk[m] = {'fk_mahasiswa_id':mhs.id,'fk_mata_kuliah_id':matkul[m].id,status:'SUBMITTED'}
+                            }
+
+                            suggestion.bulkCreate(mk)
+                                .then(function(){
+                                    res.status(200).json({status:true,message:"Suggestion job has been submitted"});
+                                })
+                                .catch(function(err){
+                                    res.status(500).json({status:false,message:"Suggestion job failed to submit"});
+                                })
+                        }).catch(function(err){
+                            res.status(500).json({status:false,message:"Database error occured when operating table 'matakuliahs'"});                
+                        });;
+                    }else{
+                        res.status(200).json({status:true,message:"Suggestion has been predicted",suggest:suggest});
+                    }
+                }).catch(function(err){
+                    res.status(500).json({status:false,message:"Database error occured when operating table 'suggestions'"});                
+                });
+            }).catch(function(err){
+                res.status(500).json({status:false,message:"Database error occured when operating table 'mahasiswas'"});
+            })
+        }
+    }
 
     predict(req, res){
         var mhsInfo = Auth.tokenCheck(req.headers['authorization']);

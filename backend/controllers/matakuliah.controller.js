@@ -14,52 +14,6 @@ syaratmatakuliah.belongsTo(matakuliah, {as: 'smk', foreignKey: 'syarat_mata_kuli
 
 class MataKuliah{
     constructor(){}
-    
-    getSuggestion(req,res){
-        var mhsInfo = Auth.tokenCheck(req.headers['authorization']);
-        if(mhsInfo == null){
-            res.status(401).json({status:false,messsage:"Authentication failed"});
-        }else{
-            var username = mhsInfo.nama_user;
-        
-            mahasiswa.findOne({
-                where: {nama_user: username}
-            }).then(function(mhs){
-                suggestion.findAll({
-                    where: {fk_mahasiswa_id: mhs.id, status: "PREDICTED"},
-                    order: [['fk_nilai_mutu_id'], ['confidence','DESC']]
-                }).then(function(suggest){
-                    if(!suggest.length){
-                        matakuliah.findAll({
-                            where: {is_class: true}
-                        }).then(function(matkul){
-                            var mk = new Array();
-
-                            for(var m in matkul){
-                                mk[m] = {'fk_mahasiswa_id':mhs.id,'fk_mata_kuliah_id':matkul[m].id,status:'SUBMITTED'}
-                            }
-
-                            suggestion.bulkCreate(mk)
-                                .then(function(){
-                                    res.status(200).json({status:true,message:"Suggestion job has been submitted"});
-                                })
-                                .catch(function(err){
-                                    res.status(500).json({status:false,message:"Suggestion job failed to submit"});
-                                })
-                        }).catch(function(err){
-                            res.status(500).json({status:false,message:"Database error occured when operating table 'matakuliahs'"});                
-                        });;
-                    }else{
-                        res.status(200).json({status:true,message:"New Suggestion jobs has been created",suggest:suggest});
-                    }
-                }).catch(function(err){
-                    res.status(500).json({status:false,message:"Database error occured when operating table 'suggestions'"});                
-                });
-            }).catch(function(err){
-                res.status(500).json({status:false,message:"Database error occured when operating table 'mahasiswas'"});
-            })
-        }
-    }
 
     getPrasyarat(matkulId){
         return syaratmatakuliah.findAll({

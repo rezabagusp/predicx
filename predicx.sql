@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 100116
 File Encoding         : 65001
 
-Date: 2017-12-19 19:01:08
+Date: 2017-12-21 15:09:10
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -56,7 +56,7 @@ CREATE TABLE `historymatakuliahs` (
   KEY `fk_mata_kuliah_id` (`fk_mata_kuliah_id`),
   CONSTRAINT `historymatakuliahs_ibfk_1` FOREIGN KEY (`fk_mahasiswa_id`) REFERENCES `mahasiswas` (`id`),
   CONSTRAINT `historymatakuliahs_ibfk_2` FOREIGN KEY (`fk_mata_kuliah_id`) REFERENCES `matakuliahs` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of historymatakuliahs
@@ -84,6 +84,48 @@ INSERT INTO `historymatakuliahs` VALUES ('20', '3', '26', '1', null, '2017-12-19
 INSERT INTO `historymatakuliahs` VALUES ('21', '3', '27', '1', null, '2017-12-19 08:13:35', '2017-12-19 08:13:44');
 INSERT INTO `historymatakuliahs` VALUES ('22', '3', '28', '1', null, '2017-12-19 08:13:35', '2017-12-19 08:13:44');
 INSERT INTO `historymatakuliahs` VALUES ('23', '4', '1', '2', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `historymatakuliahs` VALUES ('24', '4', '4', '2', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `historymatakuliahs` VALUES ('25', '4', '5', '4', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `historymatakuliahs` VALUES ('26', '4', '6', '3', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `historymatakuliahs` VALUES ('27', '4', '7', '4', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `historymatakuliahs` VALUES ('29', '4', '9', '5', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `historymatakuliahs` VALUES ('30', '4', '8', '2', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `historymatakuliahs` VALUES ('31', '4', '10', '3', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `historymatakuliahs` VALUES ('32', '4', '19', '2', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `historymatakuliahs` VALUES ('33', '4', '12', '2', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `historymatakuliahs` VALUES ('34', '4', '20', '1', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `historymatakuliahs` VALUES ('35', '4', '21', '3', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `historymatakuliahs` VALUES ('36', '4', '22', '3', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `historymatakuliahs` VALUES ('37', '4', '23', '2', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `historymatakuliahs` VALUES ('38', '4', '24', '3', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `historymatakuliahs` VALUES ('39', '4', '25', '2', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `historymatakuliahs` VALUES ('40', '4', '26', '3', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `historymatakuliahs` VALUES ('41', '4', '27', '2', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `historymatakuliahs` VALUES ('42', '4', '28', '1', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `historymatakuliahs` VALUES ('43', '4', '29', '2', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `historymatakuliahs` VALUES ('44', '4', '33', '3', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `historymatakuliahs` VALUES ('45', '4', '34', '1', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `historymatakuliahs` VALUES ('46', '10', '1', '1', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `historymatakuliahs` VALUES ('47', '10', '4', '2', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `historymatakuliahs` VALUES ('48', '10', '5', '3', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `historymatakuliahs` VALUES ('49', '10', '6', '1', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `historymatakuliahs` VALUES ('50', '10', '7', '3', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `historymatakuliahs` VALUES ('51', '10', '8', '2', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `historymatakuliahs` VALUES ('52', '10', '9', '2', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `historymatakuliahs` VALUES ('53', '10', '10', '1', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `historymatakuliahs` VALUES ('54', '10', '11', '2', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `historymatakuliahs` VALUES ('55', '10', '19', '4', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `historymatakuliahs` VALUES ('56', '10', '20', '1', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `historymatakuliahs` VALUES ('57', '10', '21', '1', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `historymatakuliahs` VALUES ('58', '10', '22', '2', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `historymatakuliahs` VALUES ('59', '10', '23', '2', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `historymatakuliahs` VALUES ('60', '10', '24', '3', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `historymatakuliahs` VALUES ('61', '10', '25', '2', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `historymatakuliahs` VALUES ('62', '10', '26', '3', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `historymatakuliahs` VALUES ('63', '10', '27', '1', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `historymatakuliahs` VALUES ('64', '10', '28', '2', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `historymatakuliahs` VALUES ('65', '10', '29', '1', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `historymatakuliahs` VALUES ('66', '10', '33', '3', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 
 -- ----------------------------
 -- Table structure for mahasiswamodels
@@ -123,7 +165,7 @@ CREATE TABLE `mahasiswas` (
   PRIMARY KEY (`id`),
   KEY `fk_departemen_id` (`fk_departemen_id`),
   CONSTRAINT `mahasiswas_ibfk_1` FOREIGN KEY (`fk_departemen_id`) REFERENCES `departemens` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of mahasiswas
@@ -137,6 +179,7 @@ INSERT INTO `mahasiswas` VALUES ('6', 'Parhan Zikkry Padly', 'G64140011', 'parha
 INSERT INTO `mahasiswas` VALUES ('7', 'Ilman Na\'Afian Wirawan', 'G64140024', 'ilman_nw', '9eb756f81c53c334a1e0d22ee97aff818a2aebfa9ba21a45e855f76a63073cdb', 'ilcong_13@hotmail.com', 'mahasiswa', '6', '2017-12-05 17:57:04', '2017-12-05 17:57:04');
 INSERT INTO `mahasiswas` VALUES ('8', 'AKHIYAR WALADI', 'G64130012', 'akiyar', '2e7216bfce734bc033e2cdecdd440acdbfc7fb03a1a6a2ee2974d77136c90930', 'akiyar@student.ipb.ac.id', 'mahasiswa', '6', '2017-12-05 17:57:43', '2017-12-05 17:57:43');
 INSERT INTO `mahasiswas` VALUES ('9', 'ARIEF MAULIDY N', 'G64140075', 'arief_maulidy', '1f13df4c397d8766846c853eef8c51c14de8b5cebd985c9609741479bd5f5fe3', 'arief.maulidy14@gmail.com', 'mahasiswa', '6', '2017-12-05 18:23:48', '2017-12-05 18:23:48');
+INSERT INTO `mahasiswas` VALUES ('10', 'M RAIHAN FAJRI', 'G64140074', 'raihan_fajri', '594d7741d32fbca8e664c209532947adb770d7ef602939d6bc6d0420f5df7a50', 'raihanfajri1206@gmail.com', 'mahasiswa', '6', '2017-12-20 18:17:31', '2017-12-20 18:17:31');
 
 -- ----------------------------
 -- Table structure for matakuliahs
@@ -225,7 +268,7 @@ CREATE TABLE `nilaimutus` (
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of nilaimutus
@@ -237,6 +280,32 @@ INSERT INTO `nilaimutus` VALUES ('4', '60', '65', 'BC', '2017-12-19 07:30:55', '
 INSERT INTO `nilaimutus` VALUES ('5', '55', '60', 'C', '2017-12-19 07:30:55', '2017-12-19 07:30:55');
 INSERT INTO `nilaimutus` VALUES ('6', '50', '55', 'D', '2017-12-19 07:30:55', '2017-12-19 07:30:55');
 INSERT INTO `nilaimutus` VALUES ('7', '0', '50', 'E', '2017-12-19 07:30:55', '2017-12-19 07:30:55');
+
+-- ----------------------------
+-- Table structure for suggestions
+-- ----------------------------
+DROP TABLE IF EXISTS `suggestions`;
+CREATE TABLE `suggestions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `fk_mahasiswa_id` int(11) DEFAULT NULL,
+  `fk_mata_kuliah_id` int(11) DEFAULT NULL,
+  `fk_nilai_mutu_id` int(11) DEFAULT NULL,
+  `confidence` varchar(255) DEFAULT NULL,
+  `status` varchar(255) DEFAULT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_mahasiswa_id` (`fk_mahasiswa_id`),
+  KEY `fk_mata_kuliah_id` (`fk_mata_kuliah_id`),
+  KEY `fk_nilai_mutu_id` (`fk_nilai_mutu_id`),
+  CONSTRAINT `suggestions_ibfk_1` FOREIGN KEY (`fk_mahasiswa_id`) REFERENCES `mahasiswas` (`id`),
+  CONSTRAINT `suggestions_ibfk_2` FOREIGN KEY (`fk_mata_kuliah_id`) REFERENCES `matakuliahs` (`id`),
+  CONSTRAINT `suggestions_ibfk_3` FOREIGN KEY (`fk_nilai_mutu_id`) REFERENCES `nilaimutus` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Records of suggestions
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for syaratmatakuliahs

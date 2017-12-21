@@ -8,9 +8,4 @@ router.get('/all', function(req, res, next){
     matakuliah.getMatkul(req, res);
 });
 
-router.get('/suggestion', function(req, res, next){
-    matakuliah.getSuggestion(req, res);
-});
-
-
 module.exports = router;

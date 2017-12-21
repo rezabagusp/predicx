@@ -101,7 +101,6 @@ export class PredictPage {
 
   getItems(ev: any) {
       // Reset items back to all of the items
-      // this.initializeItems();
       this.copyItems();
       // Show suggestion items
       this.searchStatus = true;
@@ -132,6 +131,19 @@ export class PredictPage {
     console.log(this.chartData)
     let self = this
     this.hasilPrediksi = this.chartData.findIndex(function(num){return num==Math.max.apply(null,self.chartData)})
+  }
+
+  checkPredictForm(){
+    if(this.id != null || this.studyHour!=null){
+      this.predictSC()
+    }
+    else{
+      let title = "Field Masih Kosong"
+      let subTitle = "Silahkan isi matakuliah dan jam belajar"
+      let buttonText = "Dismiss"
+      let funcHandler = null
+      this.data.presentAlert(title,subTitle,buttonText,funcHandler,true)
+    }
   }
 
   predictSC(){
@@ -165,7 +177,7 @@ export class PredictPage {
         if(err.status == 401){
             this.data.presentAuthAlert(this.navCtrl.setRoot(LoginPage))
           }
-          else if(err.status == 500){
+          else{
             this.data.presentConnectionErrorAlert(this.predictSC())
           }
       }

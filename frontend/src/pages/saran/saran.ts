@@ -16,17 +16,20 @@ import { LoginPage } from '../login/login';
 })
 export class SaranPage {
 
+  suggested :boolean = false;
+  items : any;
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public data: DataProvider,
               public http: Http) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad Saran');
+    this.predictSaran()
   }
 
   predictSaran(){
-    let base_url = this.data.base_url
-    let query =''
+    let query ='predict/suggestion'
     let token = localStorage.getItem('token')
     let header= new Headers();
     header.append('Content-type', 'application/json' ); 
@@ -38,6 +41,9 @@ export class SaranPage {
         let response = data.json();
         if(response.status){
           console.log(response)
+          this.items = response.suggest
+          if(response.hasOwnProperty("suggest")) this.suggested = true
+          else this.suggested = false
           this.data.loadings.dismiss();
         }
         else{
@@ -54,7 +60,7 @@ export class SaranPage {
           else if(err.status == 500){
             this.data.presentConnectionErrorAlert(null)
           }
-      }
-    )
+      })
   }
+
 }

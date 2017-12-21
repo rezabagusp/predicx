@@ -11,7 +11,7 @@ import { LoadingController, AlertController } from 'ionic-angular';
 @Injectable()
 export class DataProvider {
 
-  public base_url= "http://localhost:3000/"
+  public base_url= "http://b64b32e6.ngrok.io/"
   public loadings:any;
   public alert:any;
 
@@ -25,6 +25,22 @@ export class DataProvider {
       content: 'Loading Please Wait...'
     });
     this.loadings.present();
+  }
+
+  presentAlert(title,subTitle,buttontext,funcHandler,backdrop:boolean){
+    this.alert = this.alertCtrl.create({
+      title: title,
+      subTitle: subTitle,
+      buttons: [
+      {
+        text: buttontext,
+        handler: () => {
+          funcHandler
+        }
+      }],
+      enableBackdropDismiss : backdrop
+    });
+    this.alert.present();
   }
 
   presentAuthAlert(funcHandler) {

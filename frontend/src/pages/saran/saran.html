@@ -12,22 +12,41 @@
             <ion-icon name="menu"></ion-icon>
           </button>
           <ion-title>Saran</ion-title>
+          <ion-buttons end>
+            <button ion-button icon-only color="royal" (tap)="predictSaran()">
+              <ion-icon name="refresh"></ion-icon>
+            </button>
+          </ion-buttons>
         </ion-navbar>
     </ion-toolbar>
 
 </ion-header>
 
 <ion-content padding>
-  <div style="font-size:20px" text-center>Best of 4 Predictions</div>
-  <div *ngFor='let matkul of [1,2,3,4]'>
-  <ion-card>
-    <ion-card-header>
-      STK321 - Analisis Regresi
-    </ion-card-header>
-    <ion-card-content>
-      Prediksi : A
-    </ion-card-content>
-  </ion-card>
+  <p style="font-size:25px" text-center>Mata Kuliah Yang Disarankan</p>
+  <div *ngIf="suggested">
+    <div *ngFor='let item of items'>
+      <ion-card>
+        <ion-card-header text-center>
+          {{ item.mataKuliah.kode_mata_kuliah.toUpperCase() }} - {{ item.mataKuliah.nama_mata_kuliah }}
+        </ion-card-header>
+        <ion-card-content>
+          <div style="font-size:70px" text-center>
+            {{ item.nilaiMutu.huruf_mutu }}
+          </div>
+          Confidence : {{ item.confidence }} %
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+  <div *ngIf="!suggested">
+    <p text-center>Silahkan tunggu beberapa saat, kemudian</p>
+    <p text-center>Tekan refresh untuk mendapatkan saran</p>
+    <ion-buttons text-center>
+      <button ion-button icon-only color="royal" (tap)="predictSaran()">
+        <ion-icon name="refresh"></ion-icon>
+      </button>
+    </ion-buttons>
   </div>
 </ion-content>
 

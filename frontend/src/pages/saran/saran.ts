@@ -52,7 +52,7 @@ export class SaranPage {
             this.data.presentAuthAlert(this.navCtrl.setRoot(LoginPage))
           }
           else if(err.status == 500){
-            this.data.presentConnectionErrorAlert(this.predictSC())
+            this.data.presentConnectionErrorAlert(null)
           }
       }
     )

@@ -41,8 +41,10 @@ export class SaranPage {
         let response = data.json();
         if(response.status){
           console.log(response)
-          this.items = response.suggest
-          if(response.hasOwnProperty("suggest")) this.suggested = true
+          if(response.hasOwnProperty("suggest")) {
+            this.suggested = true
+            this.items = response.suggest.slice(0,4)
+          }
           else this.suggested = false
           this.data.loadings.dismiss();
         }

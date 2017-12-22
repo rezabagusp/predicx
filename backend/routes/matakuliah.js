@@ -8,4 +8,8 @@ router.get('/all', function(req, res, next){
     matakuliah.getMatkul(req, res);
 });
 
+router.get('/history-matkuls', function(req, res, next){
+    matakuliah.getHistoryMatkuls(req, res);
+});
+
 module.exports = router;

@@ -6,6 +6,8 @@ var matakuliah = sequelize.import('./../models/mataKuliah.model');
 var syaratmatakuliah = sequelize.import('./../models/syaratMataKuliah.model');
 var suggestion = sequelize.import('./../models/suggestion.model');
 var mahasiswa = sequelize.import('./../models/mahasiswa.model');
+var historyMataKuliah = sequelize.import('./../models/historyMataKuliah.model');
+var nilaiMutu = sequelize.import('./../models/nilaiMutu.model');
 
 matakuliah.hasMany(syaratmatakuliah, {foreign_key: 'fk_mata_kuliah_id'});
 syaratmatakuliah.belongsTo(matakuliah, {as: 'mk', foreignKey: 'fk_mata_kuliah_id', targetKey: 'id'});
@@ -42,6 +44,34 @@ class MataKuliah{
         }
         
     }
+
+    getHistoryMatkuls(req, res){
+        var mhsInfo = Auth.tokenCheck(req.headers.authorization);
+
+        // menerima id mahasiswa
+        var id_mahasiswa = req.query.id_mahasiswa;
+        if(mhsInfo != null){
+            historyMataKuliah.findAll({
+                include:[{ 
+                    model: mahasiswa
+                },{
+                    model: nilaiMutu
+                },{
+                    model: matakuliah
+                }],
+                where:{
+                    fk_mahasiswa_id: id_mahasiswa
+                }
+            }).then((hasil)=>{
+                res.status(200).json({status: true, message:"success get history mata kuliah", result: hasil})
+            }).catch((err)=>{
+                res.status(500).json({status: false, message:"Internal Server Error"});
+            })
+        }
+        else{
+            res.status(401).json({status: false, message:"Authentication Failed"})
+        }
+    }    
 }
 
 module.exports = new MataKuliah;

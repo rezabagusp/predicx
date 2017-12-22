@@ -4,20 +4,64 @@
           <button ion-button menuToggle>
             <ion-icon name="menu"></ion-icon>
           </button>
-          <ion-title>Home</ion-title>
+          <ion-title>Beranda</ion-title>
         </ion-navbar>
     </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-  <div *ngFor='let matkul of [1,2,3,4]'>
-  <ion-card>
-    <ion-card-header>
-      STK321 - Analisis Regresi
-    </ion-card-header>
-    <ion-card-content>
-      Prediksi : A
-    </ion-card-content>
-  </ion-card>
+
+    <ion-row>
+      <ion-col col-6 style="padding:0px">
+        <ion-card style="background-color: #ff3333">
+          <ion-card-header class = "text-center">
+            <ion-col style="color: #fff">
+              Semester <br>
+            </ion-col>
+          </ion-card-header>
+          <ion-card-content class = "text-center" >
+            <ion-col style="color: #fff;font-size:34px"> 
+              <strong>{{semester}}</strong>
+            </ion-col>
+          </ion-card-content>
+        </ion-card>                
+      </ion-col>
+
+      <ion-col col-6 style="padding:0px">
+        <ion-card style="background-color:#00e600">
+          <ion-card-header class = "text-center">
+            <ion-col class="wrap-text"style="color: #fff" >
+              Jumlah Mata <br>Kuliah
+            </ion-col>
+          </ion-card-header>
+          <ion-card-content class = "text-center">
+            <ion-col style="color: #fff; font-size:34px" >
+              <strong>{{jumlah_mata_kuliah}}</strong>
+            </ion-col>
+          </ion-card-content>
+        </ion-card>                
+      </ion-col>      
+    </ion-row>
+
+  <ion-grid>
+    <ion-row>
+        <ion-col col-12> List Mata Kuliah : </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <div *ngFor='let matkul of list_matkul; let i = index' >
+    <ion-card   >
+      <ion-card-header >
+        <ion-col class="wrap-text">
+          {{matkul?.mataKuliah?.kode_mata_kuliah | uppercase}} - {{matkul?.mataKuliah?.nama_mata_kuliah}}
+        </ion-col>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-col style="font-size:">
+          Huruf Mutu : {{matkul?.nilaiMutu?.huruf_mutu}}
+        </ion-col>
+      </ion-card-content>
+    </ion-card>
   </div>
+
 </ion-content>

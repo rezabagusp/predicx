@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Http,Headers,RequestOptions } from '@angular/http';
 import { LoadingController, AlertController } from 'ionic-angular';
+import { AuthHttp, JwtHelper } from 'angular2-jwt';
 /*
   Generated class for the DataProvider provider.
 
@@ -11,12 +12,28 @@ import { LoadingController, AlertController } from 'ionic-angular';
 @Injectable()
 export class DataProvider {
 
-  public base_url= "http://b64b32e6.ngrok.io/"
+  // public base_url= "http://b64b32e6.ngrok.io/"
+  public base_url= "http://localhost:3000/"  
   public loadings:any;
   public alert:any;
 
+  public claims:any;
+  public token:any;
+  public semester:any;
+  public username:any;
+
+  //define jwt helper
+  jwthelper:JwtHelper = new JwtHelper();
+
   constructor(public http: HttpClient, public LoadingCtrl: LoadingController, public alertCtrl:AlertController) {
     console.log('Hello DataProvider Provider');
+  }
+
+  getLocalStorage(){
+    this.token = localStorage.getItem('token');
+    this.claims = this.jwthelper.decodeToken(this.token);
+    this.semester = this.claims.smt;
+    this.username = this.claims.nama_user;
   }
 
   presentLoadingText() {

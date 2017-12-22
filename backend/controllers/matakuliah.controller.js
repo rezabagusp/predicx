@@ -49,24 +49,34 @@ class MataKuliah{
         var mhsInfo = Auth.tokenCheck(req.headers.authorization);
 
         // menerima id mahasiswa
-        var id_mahasiswa = req.query.id_mahasiswa;
+        var username = req.query.username;
         if(mhsInfo != null){
-            historyMataKuliah.findAll({
-                include:[{ 
-                    model: mahasiswa
-                },{
-                    model: nilaiMutu
-                },{
-                    model: matakuliah
-                }],
+            mahasiswa.findOne({
                 where:{
-                    fk_mahasiswa_id: id_mahasiswa
+                    nama_user: username
                 }
             }).then((hasil)=>{
-                res.status(200).json({status: true, message:"success get history mata kuliah", result: hasil})
-            }).catch((err)=>{
-                res.status(500).json({status: false, message:"Internal Server Error"});
+                let id_mahasiswa = hasil.id;
+                historyMataKuliah.findAll({
+                    include:[{ 
+                        model: mahasiswa
+                    },{
+                        model: nilaiMutu
+                    },{
+                        model: matakuliah
+                    }],
+                    where:{
+                        fk_mahasiswa_id: id_mahasiswa
+                    }
+                }).then((hasil)=>{
+                    res.status(200).json({status: true, message:"success get history mata kuliah", result: hasil})
+                }).catch((err)=>{
+                    res.status(500).json({status: false, message:"Internal Server Error"});
+                })
+            }).catch((errr)=>{
+                res.status(200).json({status: false, message: "username tidak ditemukan"})
             })
+
         }
         else{
             res.status(401).json({status: false, message:"Authentication Failed"})
